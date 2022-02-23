@@ -22,6 +22,7 @@ public class Student {
     private String lastName;
 
     @Email
+    @NotBlank
     private String email;
     private String phoneNumber;
 
