@@ -19,7 +19,7 @@ public class StudentService {
         entityManager.persist(student);
     }
 
-    public Optional<Student> findStudentById(Long id) {
+    public Optional<Student> getStudentById(Long id) {
         return Optional.ofNullable(entityManager.find(Student.class, id));
     }
 
@@ -54,7 +54,7 @@ public class StudentService {
         student.setPhoneNumber(phoneNumber);
         return student;
     }
-    
+
     public void deleteStudent(Long id) {
         Student student = entityManager.find(Student.class, id);
         entityManager.detach(student);
