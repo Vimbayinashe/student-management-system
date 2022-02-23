@@ -10,10 +10,10 @@ public class ErrorMessage {
     String message;
     String url;
 
-    public ErrorMessage(Response.Status status, String message, String path) {
+    public ErrorMessage(Response.Status status, String message, String url) {
         this.errorCode = status.getStatusCode();
         this.message = message;
-        this.url = path;
+        this.url = url;
     }
 
     public LocalDateTime getTimestamp() {
