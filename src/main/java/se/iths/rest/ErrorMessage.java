@@ -10,6 +10,11 @@ public class ErrorMessage {
     String message;
     String url;
 
+    public ErrorMessage(Response.Status status, String message) {
+        this.errorCode = status.getStatusCode();
+        this.message = message;
+    }
+
     public ErrorMessage(Response.Status status, String message, String url) {
         this.errorCode = status.getStatusCode();
         this.message = message;

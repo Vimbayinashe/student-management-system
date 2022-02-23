@@ -45,8 +45,15 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student) {
-        studentService.createStudent(student);
-        return Response.status(Response.Status.CREATED).entity(student).build();
+        try {
+            studentService.createStudent(student);
+            return Response.status(Response.Status.CREATED).entity(student).build();
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorMessage(Response.Status.BAD_REQUEST, "Incorrect student details submitted."))
+                    .build();
+//            throw new IncorrectStudentDetailsException(e);
+        }
     }
 
 
