@@ -41,7 +41,7 @@ public class StudentRest {
 
     @Path("")
     @POST
-    public Response createStudent(Student student) {    //todo: is it better to use Optional here?
+    public Response createStudent(Student student) {
         try {
             studentService.createStudent(student);
             return Response.status(Response.Status.CREATED).entity(student).build();
@@ -50,15 +50,14 @@ public class StudentRest {
         }
     }
 
-    //todo : is creating a new entity instead of replacing!!
-    @Path("")
+    @Path("")        //todo : is creating a new entity instead of replacing!!
     @PUT
     public Response updateStudent(Student student) {
         try {
             studentService.updateStudent(student);
             return Response.ok(student).build();
         } catch (RuntimeException e) {
-            throw new IncorrectStudentDetailsException("Incorrect details for a student submitted.");
+            throw new IncorrectStudentDetailsException("Incorrect details for a student submitted to update.");
         }
     }
 
@@ -69,8 +68,7 @@ public class StudentRest {
                                          @QueryParam("firstName") String firstName,
                                          @QueryParam("lastName") String lastName,
                                          @QueryParam("email") String email,
-                                         @QueryParam("phoneNumber") String phoneNumber
-    ) {
+                                         @QueryParam("phoneNumber") String phoneNumber) {
 
         Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
