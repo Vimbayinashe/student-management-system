@@ -9,7 +9,3 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-
-
-# Ignore Custom IncorrectStudentDetailsException & its Mapper
-**/IncorrectStudentDetails*.java

@@ -2,6 +2,7 @@ package se.iths.rest;
 
 
 import se.iths.entity.Student;
+import se.iths.exceptions.IncorrectStudentDetailsException;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
 
@@ -34,7 +35,6 @@ public class StudentRest {
     @GET
     public Response getStudent(@PathParam("id") Long id) {
         Optional<Student> foundStudent = studentService.getStudentById(id);
-
         Student student = foundStudent.orElseThrow(() -> new StudentNotFoundException(id));
         return Response.ok(student).build();
     }
@@ -46,10 +46,7 @@ public class StudentRest {
             studentService.createStudent(student);
             return Response.status(Response.Status.CREATED).entity(student).build();
         } catch (RuntimeException e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(new ErrorMessage(Response.Status.BAD_REQUEST, "Incorrect student details submitted."))
-                    .build();
-//            throw new IncorrectStudentDetailsException(e);
+            throw new IncorrectStudentDetailsException("Incorrect details for a new student submitted.");
         }
     }
 
@@ -57,11 +54,13 @@ public class StudentRest {
     @Path("")
     @PUT
     public Response updateStudent(Student student) {
-        studentService.updateStudent(student);
-        return Response.ok(student).build();
+        try {
+            studentService.updateStudent(student);
+            return Response.ok(student).build();
+        } catch (RuntimeException e) {
+            throw new IncorrectStudentDetailsException("Incorrect details for a student submitted.");
+        }
     }
-
-    // Exception handling: should be a StudentNotFoundException in a try catch block
 
 
     @Path("{id}")
@@ -98,7 +97,7 @@ public class StudentRest {
     }
 
     private void checkIfStudentExists(Long id) {
-        Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
+       studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
 }
