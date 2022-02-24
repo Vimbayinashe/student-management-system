@@ -1,4 +1,4 @@
-package se.iths.rest;
+package se.iths.exceptions;
 
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
@@ -10,9 +10,7 @@ public class ErrorMessage {
     String message;
     String url;
 
-    public ErrorMessage(Response.Status status, String message) {
-        this.errorCode = status.getStatusCode();
-        this.message = message;
+    public ErrorMessage() {
     }
 
     public ErrorMessage(Response.Status status, String message, String url) {

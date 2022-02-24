@@ -1,7 +1,5 @@
 package se.iths.exceptions;
 
-import se.iths.rest.ErrorMessage;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -14,7 +12,7 @@ public class IncorrectStudentDetailsExceptionMapper implements ExceptionMapper<I
     @Override
     public Response toResponse(IncorrectStudentDetailsException e) {
         return Response.status(BAD_REQUEST)
-                .entity(new ErrorMessage(BAD_REQUEST, e.getCustomMessage()))
+                .entity(new ErrorMessage(BAD_REQUEST, e.getCustomMessage(), "/api/v1/students/"))
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .build();
     }
