@@ -2,7 +2,6 @@ package se.iths.rest;
 
 
 import se.iths.entity.Student;
-import se.iths.exceptions.IncorrectStudentDetailsException;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
 
@@ -51,7 +50,7 @@ public class StudentRest {
         }
     }
 
-    //todo : is creating a new entity instead of replacing!!        Also add felhantering
+    //todo : is creating a new entity instead of replacing!!
     @Path("")
     @PUT
     public Response updateStudent(Student student) {
@@ -59,37 +58,47 @@ public class StudentRest {
         return Response.ok(student).build();
     }
 
+    // Exception handling: should be a StudentNotFoundException in a try catch block
+
+
     @Path("{id}")
     @PATCH
     public Response updateStudentDetails(@PathParam("id") Long id,
-                                    @QueryParam("firstName") String firstName,
-                                    @QueryParam("lastName") String lastName,
-                                    @QueryParam("email") String email,
-                                    @QueryParam("phoneNumber") String phoneNumber
+                                         @QueryParam("firstName") String firstName,
+                                         @QueryParam("lastName") String lastName,
+                                         @QueryParam("email") String email,
+                                         @QueryParam("phoneNumber") String phoneNumber
     ) {
 
         Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
-        if(firstName != null)
+        if (firstName != null)
             student = studentService.updateFirstname(id, firstName);
-        if(lastName != null)
+        if (lastName != null)
             student = studentService.updateLastName(id, lastName);
-        if(email != null)
+        if (email != null)
             student = studentService.updateEmail(id, email);
-        if(phoneNumber != null)
+        if (phoneNumber != null)
             student = studentService.updatePhoneNumber(id, phoneNumber);
 
         return Response.ok(student).build();
     }
 
+    @Path("{id}")
+    @DELETE
+    public Response deleteStudent(@PathParam("id") Long id) {
+        checkIfStudentExists(id);
+        studentService.deleteStudent(id);
+        return Response.status(Response.Status.OK)
+                .entity("{\"message\": \"Student successfully deleted\"}")
+                .build();
+    }
 
-//        if(firstName == null)
-//            throw new IncorrectStudentDetailsException("Firstname is null");
+    private void checkIfStudentExists(Long id) {
+        Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    }
 
 
-    // Meaningful Response Codes
-    // return Response.status(Response.Status.CREATED).entity(student).build();
-    // return Response.created(URI.create("/codes"))     //alternative
 
     //todo: error handling when student id not found OR just give the generic error message
 

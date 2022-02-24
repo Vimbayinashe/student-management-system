@@ -57,7 +57,7 @@ public class StudentService {
 
     public void deleteStudent(Long id) {
         Student student = entityManager.find(Student.class, id);
-        entityManager.detach(student);
+        entityManager.remove(student);
     }
 
 
