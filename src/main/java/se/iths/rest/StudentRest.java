@@ -44,7 +44,7 @@ public class StudentRest {
 
     @Path("")
     @POST
-    public Response createStudent(Student student) {
+    public Response createStudent(Student student) {    //todo: is it better to use Optional here?
         try {
             studentService.createStudent(student);
             return Response.status(Response.Status.CREATED).entity(student).build();
@@ -55,6 +55,16 @@ public class StudentRest {
 //            throw new IncorrectStudentDetailsException(e);
         }
     }
+
+    //todo : is creating a new entity instead of replacing!!
+    @Path("")
+    @PUT
+    public Response replaceStudent(Student student) {
+        studentService.updateStudent(student);
+        return Response.ok(student).build();
+    }
+
+    
 
 
 
