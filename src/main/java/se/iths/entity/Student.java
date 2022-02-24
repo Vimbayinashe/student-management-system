@@ -15,10 +15,10 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "First name must not be blank")
+    @NotBlank
     private String firstName;
 
-    @NotBlank(message = "Last name must not be blank.")
+    @NotBlank
     private String lastName;
 
     @Email
