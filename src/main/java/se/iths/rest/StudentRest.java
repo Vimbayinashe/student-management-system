@@ -2,6 +2,8 @@ package se.iths.rest;
 
 
 import se.iths.entity.Student;
+import se.iths.exceptions.IncorrectStudentDetailsException;
+import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
 
 import javax.inject.Inject;
@@ -31,14 +33,7 @@ public class StudentRest {
     public Response getStudent(@PathParam("id") Long id) {
         Optional<Student> foundStudent = studentService.getStudentById(id);
 
-        Student student = foundStudent.orElseThrow(     //create own Exception here?
-                () -> new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ErrorMessage(Response.Status.NOT_FOUND, "Student with ID " + id + " not found",
-                                "/api/v1/students/" + id))
-                        .type(MediaType.APPLICATION_JSON_TYPE)
-                        .build()
-                )
-        );
+        Student student = foundStudent.orElseThrow(() -> new StudentNotFoundException(id));
         return Response.ok(student).build();
     }
 
@@ -56,18 +51,40 @@ public class StudentRest {
         }
     }
 
-    //todo : is creating a new entity instead of replacing!!
+    //todo : is creating a new entity instead of replacing!!        Also add felhantering
     @Path("")
     @PUT
-    public Response replaceStudent(Student student) {
+    public Response updateStudent(Student student) {
         studentService.updateStudent(student);
         return Response.ok(student).build();
     }
 
-    
+    @Path("{id}")
+    @PATCH
+    public Response updateStudentDetails(@PathParam("id") Long id,
+                                    @QueryParam("firstName") String firstName,
+                                    @QueryParam("lastName") String lastName,
+                                    @QueryParam("email") String email,
+                                    @QueryParam("phoneNumber") String phoneNumber
+    ) {
+
+        Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
+
+        if(firstName != null)
+            student = studentService.updateFirstname(id, firstName);
+        if(lastName != null)
+            student = studentService.updateLastName(id, lastName);
+        if(email != null)
+            student = studentService.updateEmail(id, email);
+        if(phoneNumber != null)
+            student = studentService.updatePhoneNumber(id, phoneNumber);
+
+        return Response.ok(student).build();
+    }
 
 
-
+//        if(firstName == null)
+//            throw new IncorrectStudentDetailsException("Firstname is null");
 
 
     // Meaningful Response Codes
