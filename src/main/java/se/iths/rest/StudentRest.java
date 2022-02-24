@@ -22,8 +22,11 @@ public class StudentRest {
 
     @Path("")
     @GET
-    public Response getAllStudents() {
-        List<Student> studentList = studentService.getAllStudents();
+    public Response getAllStudents(@QueryParam("lastName") String lastName) {
+        List<Student> studentList = lastName == null
+                ? studentService.getAllStudents()
+                : studentService.getStudentsByLastName(lastName);
+
         return Response.ok(studentList).build();
     }
 
@@ -97,9 +100,5 @@ public class StudentRest {
     private void checkIfStudentExists(Long id) {
         Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
-
-
-
-    //todo: error handling when student id not found OR just give the generic error message
 
 }
