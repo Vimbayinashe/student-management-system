@@ -3,7 +3,6 @@ package se.iths.rest;
 
 import se.iths.entity.Student;
 import se.iths.entity.StudentDetails;
-import se.iths.exceptions.IncorrectStudentDetailsException;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
 import se.iths.service.StudentValidatorService;
@@ -66,18 +65,15 @@ public class StudentRest {
     @Path("{id}")
     @PATCH
     public Response updateStudentDetails(@PathParam("id") Long id, StudentDetails studentDetails) {
-
-        // todo: validate that all required fields are submitted?
-
         Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
-        if (studentDetails.getFirstName() != null)
+        if (validatorService.isUpdated(studentDetails.getFirstName()))
             student = studentService.updateFirstname(id, studentDetails.getFirstName());
-        if (studentDetails.getLastName() != null)
+        if (validatorService.isUpdated(studentDetails.getLastName()))
             student = studentService.updateLastName(id, studentDetails.getLastName());
-        if (studentDetails.getEmail() != null)
+        if (validatorService.isUpdated(studentDetails.getEmail()))
             student = studentService.updateEmail(id, studentDetails.getEmail());
-        if (studentDetails.getPhoneNumber() != null)
+        if (validatorService.isUpdated(studentDetails.getPhoneNumber()))
             student = studentService.updatePhoneNumber(id, studentDetails.getPhoneNumber());
 
         return Response.ok(student).build();

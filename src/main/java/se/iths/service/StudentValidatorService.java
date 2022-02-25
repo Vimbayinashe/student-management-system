@@ -12,4 +12,10 @@ public class StudentValidatorService {
     public void validateId(Long id) {
         studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
+
+    public boolean isUpdated(String value) {
+        if(value == null)
+            return false;
+        return  value.length() > 0;
+    }
 }
