@@ -48,10 +48,10 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student) {
-            studentService.createStudent(student);
-            return Response.status(Response.Status.CREATED).entity(student)
-                    .location(URI.create("/student-management-system/api/v1/students/" + student.getId()))
-                    .build();
+        studentService.createStudent(student);
+        return Response.status(Response.Status.CREATED).entity(student)
+                .location(URI.create("/student-management-system/api/v1/students/" + student.getId()))
+                .build();
     }
 
     @Path("")
@@ -60,13 +60,8 @@ public class StudentRest {
         validatorService.validateId(student.getId());
 
         //potential errors - invalid student details -> use Validator in StudentService;
-
-        try {
-            studentService.updateStudent(student);
-            return Response.ok(student).build();
-        } catch (RuntimeException e) {
-            throw new IncorrectStudentDetailsException("Incorrect details for a student submitted to update.");
-        }
+        studentService.updateStudent(student);
+        return Response.ok(student).build();
     }
 
 
