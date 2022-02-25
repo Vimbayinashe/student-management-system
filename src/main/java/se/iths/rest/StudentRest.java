@@ -58,8 +58,6 @@ public class StudentRest {
     @PUT
     public Response updateStudent(Student student) {
         validatorService.validateId(student.getId());
-
-        //potential errors - invalid student details -> use Validator in StudentService;
         studentService.updateStudent(student);
         return Response.ok(student).build();
     }

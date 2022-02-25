@@ -5,19 +5,21 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-public class ErrorMessage {
+public class ErrorMessages {
+
 
     LocalDateTime timestamp = LocalDateTime.now();
     int errorCode;
-    String message;
     String url;
+    List<String> errorMessages;
 
-    public ErrorMessage() {
+    public ErrorMessages() {
     }
 
-    public ErrorMessage(Response.Status status, String message, String url) {
+
+    public ErrorMessages(Response.Status status, List<String> errorMessages, String url) {
         this.errorCode = status.getStatusCode();
-        this.message = message;
+        this.errorMessages = errorMessages;
         this.url = url;
     }
 
@@ -29,12 +31,12 @@ public class ErrorMessage {
         return errorCode;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public String getUrl() {
         return url;
+    }
+
+    public List<String> getErrorMessages() {
+        return Collections.unmodifiableList(errorMessages);
     }
 
 }

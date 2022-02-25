@@ -19,7 +19,7 @@ public class IncorrectStudentDetailsException extends WebApplicationException {
 
     public IncorrectStudentDetailsException(List<String > messages) {
         super(Response.status(BAD_REQUEST)
-                .entity(new ErrorMessage(BAD_REQUEST, messages, "/api/v1/students/"))
+                .entity(new ErrorMessages(BAD_REQUEST, messages, "/api/v1/students/"))
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .build());
     }
