@@ -75,6 +75,11 @@ public class Student {
         return id;
     }
 
+    public Student setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
