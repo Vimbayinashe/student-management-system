@@ -2,6 +2,7 @@ package se.iths.rest;
 
 
 import se.iths.entity.Student;
+import se.iths.entity.StudentDetails;
 import se.iths.exceptions.IncorrectStudentDetailsException;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
@@ -67,22 +68,18 @@ public class StudentRest {
 
     @Path("{id}")
     @PATCH
-    public Response updateStudentDetails(@PathParam("id") Long id,
-                                         @QueryParam("firstName") String firstName,
-                                         @QueryParam("lastName") String lastName,
-                                         @QueryParam("email") String email,
-                                         @QueryParam("phoneNumber") String phoneNumber) {
+    public Response updateStudentDetails(@PathParam("id") Long id, StudentDetails studentDetails) {
 
         Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
-        if (firstName != null)
-            student = studentService.updateFirstname(id, firstName);
-        if (lastName != null)
-            student = studentService.updateLastName(id, lastName);
-        if (email != null)
-            student = studentService.updateEmail(id, email);
-        if (phoneNumber != null)
-            student = studentService.updatePhoneNumber(id, phoneNumber);
+        if (studentDetails.getFirstName() != null)
+            student = studentService.updateFirstname(id, studentDetails.getFirstName());
+        if (studentDetails.getLastName() != null)
+            student = studentService.updateLastName(id, studentDetails.getLastName());
+        if (studentDetails.getEmail() != null)
+            student = studentService.updateEmail(id, studentDetails.getEmail());
+        if (studentDetails.getPhoneNumber() != null)
+            student = studentService.updatePhoneNumber(id, studentDetails.getPhoneNumber());
 
         return Response.ok(student).build();
     }
