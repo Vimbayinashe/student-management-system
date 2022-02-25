@@ -6,6 +6,7 @@ import se.iths.entity.StudentDetails;
 import se.iths.exceptions.IncorrectStudentDetailsException;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
+import se.iths.service.StudentValidatorService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,6 +23,9 @@ public class StudentRest {
 
     @Inject
     StudentService studentService;
+
+    @Inject
+    StudentValidatorService validatorService;
 
     @Path("")
     @GET
@@ -44,6 +48,7 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student) {
+
         try {
             studentService.createStudent(student);
             return Response.status(Response.Status.CREATED).entity(student)
@@ -57,6 +62,10 @@ public class StudentRest {
     @Path("")
     @PUT
     public Response updateStudent(Student student) {
+        validatorService.validateId(student.getId());
+
+        //potential errors - invalid student details -> use Validator in StudentService;
+
         try {
             studentService.updateStudent(student);
             return Response.ok(student).build();
@@ -87,13 +96,9 @@ public class StudentRest {
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
-        checkIfStudentExists(id);
+        validatorService.validateId(id);
         studentService.deleteStudent(id);
         return Response.status(Response.Status.OK).build();
-    }
-
-    private void checkIfStudentExists(Long id) {
-       studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
 }
