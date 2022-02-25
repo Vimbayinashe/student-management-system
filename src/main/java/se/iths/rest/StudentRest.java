@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,9 @@ public class StudentRest {
     public Response createStudent(Student student) {
         try {
             studentService.createStudent(student);
-            return Response.status(Response.Status.CREATED).entity(student).build();
+            return Response.status(Response.Status.CREATED).entity(student)
+                    .location(URI.create("/student-management-system/api/v1/students/" + student.getId()))
+                    .build();
         } catch (RuntimeException e) {
             throw new IncorrectStudentDetailsException("Incorrect details for a new student submitted.");
         }
