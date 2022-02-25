@@ -92,9 +92,7 @@ public class StudentRest {
     public Response deleteStudent(@PathParam("id") Long id) {
         checkIfStudentExists(id);
         studentService.deleteStudent(id);
-        return Response.status(Response.Status.OK)
-                .entity("{\"message\": \"Student successfully deleted\"}")
-                .build();
+        return Response.status(Response.Status.OK).build();
     }
 
     private void checkIfStudentExists(Long id) {
