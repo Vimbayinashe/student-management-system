@@ -50,7 +50,7 @@ public class StudentRest {
         }
     }
 
-    @Path("")        //todo : is creating a new entity instead of replacing!!
+    @Path("")
     @PUT
     public Response updateStudent(Student student) {
         try {
