@@ -10,13 +10,6 @@ import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
 public class IncorrectStudentDetailsException extends WebApplicationException {
 
-    public IncorrectStudentDetailsException(String message){
-        super(Response.status(BAD_REQUEST)
-                .entity(new ErrorMessage(BAD_REQUEST, message, "/api/v1/students/"))
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .build());
-    }
-
     public IncorrectStudentDetailsException(List<String > messages) {
         super(Response.status(BAD_REQUEST)
                 .entity(new ErrorMessages(BAD_REQUEST, messages, "/api/v1/students/"))
