@@ -15,14 +15,14 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Firstname is a required field")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Lastname is a required field")
     private String lastName;
 
-    @Email
-    @NotBlank
+    @Email(message = "Email address must be valid")
+    @NotBlank(message = "Email address is a required field")
     private String email;
     private String phoneNumber;
 

@@ -1,17 +1,27 @@
 package se.iths.exceptions;
 
-public class IncorrectStudentDetailsException extends RuntimeException {
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-    private String customMessage;
+import java.util.List;
 
-    public IncorrectStudentDetailsException(){
-    }
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+
+public class IncorrectStudentDetailsException extends WebApplicationException {
 
     public IncorrectStudentDetailsException(String message){
-        this.customMessage = message;
+        super(Response.status(BAD_REQUEST)
+                .entity(new ErrorMessage(BAD_REQUEST, message, "/api/v1/students/"))
+                .type(MediaType.APPLICATION_JSON_TYPE)
+                .build());
     }
 
-    public String getCustomMessage() {
-        return customMessage;
+    public IncorrectStudentDetailsException(List<String > messages) {
+        super(Response.status(BAD_REQUEST)
+                .entity(new ErrorMessage(BAD_REQUEST, messages, "/api/v1/students/"))
+                .type(MediaType.APPLICATION_JSON_TYPE)
+                .build());
     }
+
 }

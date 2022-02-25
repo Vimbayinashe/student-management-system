@@ -48,15 +48,10 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student) {
-
-        try {
             studentService.createStudent(student);
             return Response.status(Response.Status.CREATED).entity(student)
                     .location(URI.create("/student-management-system/api/v1/students/" + student.getId()))
                     .build();
-        } catch (RuntimeException e) {
-            throw new IncorrectStudentDetailsException("Incorrect details for a new student submitted.");
-        }
     }
 
     @Path("")
@@ -78,6 +73,8 @@ public class StudentRest {
     @Path("{id}")
     @PATCH
     public Response updateStudentDetails(@PathParam("id") Long id, StudentDetails studentDetails) {
+
+        // todo: validate that all required fields are submitted?
 
         Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
