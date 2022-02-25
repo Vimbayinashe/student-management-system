@@ -3,7 +3,6 @@ package se.iths.service;
 
 import se.iths.entity.Student;
 import se.iths.exceptions.IncorrectStudentDetailsException;
-import se.iths.exceptions.StudentNotFoundException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -27,15 +26,12 @@ public class StudentService {
     @Inject
     Validator validator;
 
-
-    Logger logger = Logger.getLogger(StudentService.class.getName());
-
     public void createStudent(Student student) {
-        validateNewStudent(student);
+        validateStudent(student);
         entityManager.persist(student);
     }
 
-    private void validateNewStudent(Student student) {
+    private void validateStudent(Student student) {
         Set<ConstraintViolation<Student>> violations = validator.validate(student);
         List<String> errorMessages =
                 violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
@@ -53,18 +49,7 @@ public class StudentService {
     }
 
     public void updateStudent(Student student) {
-//        validatorService.validateId(student.getId());
-//        Student foundStudent =
-//                getStudentById(student.getId()).orElseThrow(() -> new StudentNotFoundException(student.getId()));
-        logger.log(Level.WARNING, student.getId().toString());
-
-        Set<ConstraintViolation<Student>> violations = validator.validate(student);
-        List<String> errorMessages =
-                violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-
-        if (errorMessages.size() > 0)
-            throw new IncorrectStudentDetailsException(errorMessages);
-
+        validateStudent(student);
         entityManager.merge(student);
     }
 
