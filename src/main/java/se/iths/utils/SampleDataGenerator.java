@@ -23,9 +23,7 @@ public class SampleDataGenerator {
             new Student("Lewis", "Thomas", "mike@thomasandsons.com"),
             new Student("Elizabeth", "Stewart", "e.stewart@mymail.com"),
             new Student("Henry", "Thorbjörn", "henry_b@mymail.com"),
-            new Student("Francis", "Everton", "francis@evertonfc.com"),
-            new Student("Theresa", "X", "thesx@ourmail.com"),
-            new Student("Tui", "Jones", "tjones@mymail.com")
+            new Student("Francis", "Everton", "francis@evertonfc.com")
         );
 
         students.forEach(student -> entityManager.persist(student));
