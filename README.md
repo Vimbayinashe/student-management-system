@@ -66,7 +66,7 @@ A student management system built with Java EE.
  3. **GET**  api/v1/students/{id}
      - Description - get a student with the specified id
      - Path Parameters
-         - **id** - an integer that represents the student's ID number in the system
+         - **id** - a number that represents the student's ID number in the system
      - Request body - none
      - Responses
          - **200 OK**   
@@ -94,7 +94,7 @@ A student management system built with Java EE.
      - Description - add a new student
      - Parameters - none
      - Request body
-       1. Required key - firstName (String), lastName (String) & email (String)
+       1. Required keys - firstName (String), lastName (String) & email (String)
        2. Optional key - phoneNumber (String)    
           _example:_
           ``` 
@@ -107,7 +107,7 @@ A student management system built with Java EE.
           ````
      - Responses
          - **200 OK**   
-           _examples:_
+           _example:_
            ```
            {
               "email": "marie.jp@lalouvre.fr",
@@ -141,6 +141,7 @@ A student management system built with Java EE.
             _example:_
             ``` 
              {
+               "id": 24,
                "firstName": "Per",
                "lastName": "Larsson",
                "email": "plarsson@melodi.se",
@@ -149,7 +150,7 @@ A student management system built with Java EE.
             ````
      - Responses
          - **200 OK**   
-           _examples:_
+           _example:_
            ```
            {
               "email": "plarsson@melodi.se",
@@ -176,13 +177,13 @@ A student management system built with Java EE.
      - Description - partially update an existing student's details. The provided property must be a string and it 
        must not be empty or null.
      - Path Parameters
-         - **id** - an integer that represents the student's ID number in the system
+         - **id** - a number that represents the student's ID number in the system
      - Request body
          1. Optional keys - firstName (String), lastName (String), email (String) or phoneNumber (String)   
             _examples:_
             ``` 
              {
-               "firstName": "Simon"
+               "firstName": "Petros"
              }
             ```
             ,
@@ -194,11 +195,11 @@ A student management system built with Java EE.
             ```
      - Responses
          - **200 OK**   
-           _examples:_
+           _example:_
            ```
            {
               "email": "plarsson@melodi.se",
-              "firstName": "Per",
+              "firstName": "Petros",
               "id": 24,
               "lastName": "Larsson",
               "phoneNumber": "0732345678"
@@ -209,16 +210,16 @@ A student management system built with Java EE.
            ```
            {
               "errorCode": 404,
-              "message": "Student with ID 18 not found",
+              "message": "Student with ID 24 not found",
               "timestamp": "2022-02-26T21:34:47.780382166",
-              "url": "/api/v1/students/18"
+              "url": "/api/v1/students/24"
            }
            ```        
        
  7. **DELETE**  api/v1/students/{id}
-     - Description - remove/delete a student from the system
+     - Description - delete a student with the given ID from the system
      - Path Parameters
-         - **id** - an integer that represents the student's ID number in the system
+         - **id** - a number that represents the student's ID number in the system
      - Request body - none
      - Responses
          - **204 No Content**    
@@ -234,7 +235,4 @@ A student management system built with Java EE.
            }
            ```    
 
-
-
-
-
+    
