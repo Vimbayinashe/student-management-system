@@ -84,7 +84,7 @@ public class StudentRest {
     public Response deleteStudent(@PathParam("id") Long id) {
         validatorService.validateId(id);
         studentService.deleteStudent(id);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
 }

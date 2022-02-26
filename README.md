@@ -1,7 +1,6 @@
 ## Student Management System
 
-A student management system built with Java EE
-
+A student management system built with Java EE.
 
 ### API Documentation
 
