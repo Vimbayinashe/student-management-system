@@ -4,7 +4,7 @@ A student management system built with Java EE.
 
 ### API Documentation
 
- 1. **GET** api/v1/students
+ 1. **GET** /api/v1/students
     - Description - gets all students
     - Parameters - none
     - Request body - none
@@ -33,7 +33,7 @@ A student management system built with Java EE.
         []
         ``  
        
- 2. **GET**  api/v1/students?lastName=query
+ 2. **GET**  /api/v1/students?lastName=query
      - Description - get all students with a requested surname 
      - Query Parameters 
         - **lastName** - a String query parameter which represents the surname to search for
@@ -63,10 +63,10 @@ A student management system built with Java EE.
            []
            ``
        
- 3. **GET**  api/v1/students/{id}
+ 3. **GET**  /api/v1/students/{id}
      - Description - get a student with the specified id
      - Path Parameters
-         - **id** - a number that represents the student's ID number in the system
+         - **id** - an integer that represents the student's ID number in the system
      - Request body - none
      - Responses
          - **200 OK**   
@@ -90,7 +90,7 @@ A student management system built with Java EE.
            }
            ```
            
- 4. **POST**  api/v1/students/
+ 4. **POST**  /api/v1/students
      - Description - add a new student
      - Parameters - none
      - Request body
@@ -132,7 +132,7 @@ A student management system built with Java EE.
            }
            ```
 
- 5. **PUT**  api/v1/students/
+ 5. **PUT**  /api/v1/students
      - Description - entirely replace an existing student's details
      - Parameters - none
      - Request body
@@ -173,11 +173,11 @@ A student management system built with Java EE.
            }
            ```           
        
- 6. **PATCH**  api/v1/students/{id}
+ 6. **PATCH**  /api/v1/students/{id}
      - Description - partially update an existing student's details. The provided property must be a string and it 
        must not be empty or null.
      - Path Parameters
-         - **id** - a number that represents the student's ID number in the system
+         - **id** - an integer that represents the student's ID number in the system
      - Request body
          1. Optional keys - firstName (String), lastName (String), email (String) or phoneNumber (String)   
             _examples:_
@@ -216,10 +216,10 @@ A student management system built with Java EE.
            }
            ```        
        
- 7. **DELETE**  api/v1/students/{id}
+ 7. **DELETE**  /api/v1/students/{id}
      - Description - delete a student with the given ID from the system
      - Path Parameters
-         - **id** - a number that represents the student's ID number in the system
+         - **id** - an integer that represents the student's ID number in the system
      - Request body - none
      - Responses
          - **204 No Content**    
