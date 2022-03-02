@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Transactional
-public class StudentService {
+public class StudentService extends Service {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -40,9 +40,9 @@ public class StudentService {
             throw new IncorrectStudentDetailsException(errorMessages);
     }
 
-    public Optional<Student> getStudentById(Long id) {
-        return Optional.ofNullable(entityManager.find(Student.class, id));
-    }
+//    public Optional<Student> getStudentById(Long id) {
+//        return Optional.ofNullable(entityManager.find(Student.class, id));
+//    }
 
     public List<Student> getAllStudents() {
         return entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();

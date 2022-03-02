@@ -39,7 +39,7 @@ public class StudentRest {
     @Path("{id}")
     @GET
     public Response getStudent(@PathParam("id") Long id) {
-        Optional<Student> foundStudent = studentService.getStudentById(id);
+        Optional<Student> foundStudent = studentService.getById(Student.class, id);
         Student student = foundStudent.orElseThrow(() -> new StudentNotFoundException(id));
         return Response.ok(student).build();
     }
@@ -65,7 +65,8 @@ public class StudentRest {
     @Path("{id}")
     @PATCH
     public Response updateStudentDetails(@PathParam("id") Long id, StudentDetails studentDetails) {
-        Student student = studentService.getStudentById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        Student student =
+                studentService.getById(Student.class, id).orElseThrow(() -> new StudentNotFoundException(id));
 
         if (validatorService.isUpdated(studentDetails.getFirstName()))
             student = studentService.updateFirstname(id, studentDetails.getFirstName());
