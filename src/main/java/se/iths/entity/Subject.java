@@ -17,6 +17,9 @@ public class Subject {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Student> students;
 
+    @ManyToOne
+    Teacher teacher;
+
     public Subject() {
         students = new HashSet<>();
     }
@@ -58,6 +61,13 @@ public class Subject {
         return Collections.unmodifiableSet(students);
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     @Override
     public boolean equals(Object o) {
