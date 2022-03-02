@@ -1,5 +1,7 @@
 package se.iths.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.List;
 @Entity
 public class Teacher extends Person{
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
     List<Subject> subjects = new ArrayList<>();
 
     public Teacher() {
@@ -21,6 +23,7 @@ public class Teacher extends Person{
     public Teacher(String firstName, String lastName, String email, String phoneNumber) {
         super(firstName, lastName, email, phoneNumber);
     }
+
 
     public List<Subject> getSubjects() {
         return Collections.unmodifiableList(subjects);

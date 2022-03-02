@@ -1,5 +1,6 @@
 package se.iths.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ public class Subject {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Student> students = new HashSet<>();;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     Teacher teacher;
 
     public Subject() {
@@ -55,6 +56,7 @@ public class Subject {
         student.removeSubject(this);
     }
 
+//    @JsonbTransient
     public Set<Student> getStudents() {
         return Collections.unmodifiableSet(students);
     }
