@@ -1,6 +1,7 @@
 package se.iths.utils;
 
 import se.iths.entity.Student;
+import se.iths.entity.Subject;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -26,6 +27,12 @@ public class SampleDataGenerator {
             new Student("Francis", "Everton", "francis@evertonfc.com")
         );
 
-        students.forEach(student -> entityManager.persist(student));
+        Subject mathematics = new Subject("mathematics");
+        students.forEach(mathematics::addStudent);
+
+        // students.forEach(student -> entityManager.persist(student));    // persists students only
+        entityManager.persist(mathematics);  // can persist both subject & students (by itself).
+                                            // Students are only created IF they don't already exist
+
     }
 }

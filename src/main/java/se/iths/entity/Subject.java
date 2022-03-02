@@ -1,10 +1,10 @@
 package se.iths.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Subject {
@@ -14,11 +14,16 @@ public class Subject {
     private Long id;
     private String name;
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Student> students;
+
     public Subject() {
+        students = new HashSet<>();
     }
 
     public Subject(String name) {
         this.name = name;
+        students = new HashSet<>();
     }
 
     public Long getId() {
@@ -38,6 +43,21 @@ public class Subject {
         this.name = name;
         return this;
     }
+
+    public void addStudent(Student student) {
+        students.add(student);
+        student.addSubject(this);
+    }
+
+    public void removeStudent(Student student) {
+        students.remove(student);
+        student.removeSubject(this);
+    }
+
+    public Set<Student> getStudents() {
+        return Collections.unmodifiableSet(students);
+    }
+
 
     @Override
     public boolean equals(Object o) {
