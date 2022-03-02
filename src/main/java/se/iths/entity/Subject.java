@@ -15,18 +15,16 @@ public class Subject {
     private String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private Set<Student> students;
+    private Set<Student> students = new HashSet<>();;
 
     @ManyToOne
     Teacher teacher;
 
     public Subject() {
-        students = new HashSet<>();
     }
 
     public Subject(String name) {
         this.name = name;
-        students = new HashSet<>();
     }
 
     public Long getId() {

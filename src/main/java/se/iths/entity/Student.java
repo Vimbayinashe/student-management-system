@@ -12,19 +12,16 @@ import java.util.Set;
 public class Student extends Person{
 
     @ManyToMany(mappedBy = "students", cascade = CascadeType.PERSIST)
-    private Set<Subject> subjects;
+    private Set<Subject> subjects = new HashSet<>();
 
     public Student() {
-        subjects = new HashSet<>();
     }
 
     public Student(String firstName, String lastName, String email) {
         super(firstName, lastName, email);
-        subjects = new HashSet<>();
     }
     public Student(String firstName, String lastName, String email, String phoneNumber) {
         super(firstName, lastName, email, phoneNumber);
-        subjects = new HashSet<>();
     }
 
     public void addSubject(Subject subject) {
