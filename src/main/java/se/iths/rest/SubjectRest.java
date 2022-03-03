@@ -1,11 +1,9 @@
 package se.iths.rest;
 
-import se.iths.entity.PersonDetails;
-import se.iths.entity.Student;
 import se.iths.entity.Subject;
 import se.iths.exceptions.EntityNotFoundException;
-import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.SubjectService;
+import se.iths.validatorservice.SubjectValidatorService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,6 +20,9 @@ public class SubjectRest {
 
     @Inject
     SubjectService subjectService;
+
+    @Inject
+    SubjectValidatorService validatorService;
 
     @Path("")
     @GET
@@ -46,6 +47,22 @@ public class SubjectRest {
         return Response.status(Response.Status.CREATED).entity(subject)
                 .location(URI.create("/student-management-system/api/v1/subjects/" + subject.getId()))
                 .build();
+    }
+
+    @Path("")
+    @PUT
+    public Response update(Subject subject) {
+        validatorService.validateId(subject.getId());
+        subjectService.update(subject);
+        return Response.ok(subject).build();
+    }
+
+    @Path("{id}")
+    @DELETE
+    public Response delete(@PathParam("id") Long id) {
+        validatorService.validateId(id);
+        subjectService.delete(Subject.class, id);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
 }
