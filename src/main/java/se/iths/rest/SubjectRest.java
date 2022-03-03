@@ -3,7 +3,7 @@ package se.iths.rest;
 import se.iths.entity.Subject;
 import se.iths.exceptions.EntityNotFoundException;
 import se.iths.service.SubjectService;
-import se.iths.validatorservice.SubjectValidatorService;
+import se.iths.service.validatorservice.SubjectValidatorService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

@@ -4,7 +4,7 @@ import se.iths.entity.PersonDetails;
 import se.iths.entity.Teacher;
 import se.iths.exceptions.TeacherNotFoundException;
 import se.iths.service.TeacherService;
-import se.iths.validatorservice.TeacherValidatorService;
+import se.iths.service.validatorservice.TeacherValidatorService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

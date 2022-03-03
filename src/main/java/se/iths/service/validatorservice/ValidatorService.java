@@ -1,4 +1,4 @@
-package se.iths.validatorservice;
+package se.iths.service.validatorservice;
 
 public class ValidatorService {
 

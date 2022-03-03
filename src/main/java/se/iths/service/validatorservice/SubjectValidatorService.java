@@ -1,4 +1,4 @@
-package se.iths.validatorservice;
+package se.iths.service.validatorservice;
 
 import se.iths.entity.Subject;
 import se.iths.exceptions.EntityNotFoundException;

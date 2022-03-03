@@ -1,4 +1,4 @@
-package se.iths.validatorservice;
+package se.iths.service.validatorservice;
 
 import se.iths.entity.Student;
 import se.iths.exceptions.StudentNotFoundException;
