@@ -31,7 +31,7 @@ public abstract class Service {
     Validator validator;
 
     public <T> void create(T entity) {
-        if(entity instanceof Person)
+        if (entity instanceof Person)
             validatePerson((Person) entity);
         entityManager.persist(entity);
     }
@@ -48,11 +48,10 @@ public abstract class Service {
     }
 
     public <T> void update(T entity) {
-        if(entity instanceof Person)
+        if (entity instanceof Person)
             validatePerson((Person) entity);
         entityManager.merge(entity);
     }
-
 
     public <T extends Person> T updateFirstname(Class<T> subClass, Long id, String firstname) {
         T person = entityManager.find(subClass, id);
@@ -60,30 +59,28 @@ public abstract class Service {
         return person;
     }
 
-    public <T extends Person> T  updateLastName(Class<T> subClass, Long id, String lastName) {
+    public <T extends Person> T updateLastName(Class<T> subClass, Long id, String lastName) {
         T person = entityManager.find(subClass, id);
         person.setLastName(lastName);
         return person;
     }
 
-    public <T extends Person> T  updateEmail(Class<T> subClass, Long id, String email) {
+    public <T extends Person> T updateEmail(Class<T> subClass, Long id, String email) {
         T person = entityManager.find(subClass, id);
         person.setEmail(email);
         return person;
     }
 
-    public <T extends Person> T  updatePhoneNumber(Class<T> subClass, Long id, String phoneNumber) {
+    public <T extends Person> T updatePhoneNumber(Class<T> subClass, Long id, String phoneNumber) {
         T person = entityManager.find(subClass, id);
         person.setPhoneNumber(phoneNumber);
         return person;
     }
 
-
-    public <T>  void delete(Class<T> subClass, Long id) {
+    public <T> void delete(Class<T> subClass, Long id) {
         T entity = entityManager.find(subClass, id);
         entityManager.remove(entity);
     }
-
 
     public <T extends Person> List<T> getPersonsByLastname(Class<T> subClass, String lastName) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -95,7 +92,6 @@ public abstract class Service {
         TypedQuery<T> typedQuery = entityManager.createQuery(criteriaQuery);
         return typedQuery.getResultList();
     }
-
 
     private <T extends Person> void validatePerson(T person) {
         Set<ConstraintViolation<T>> violations = validator.validate(person);
