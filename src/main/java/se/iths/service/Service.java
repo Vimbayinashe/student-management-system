@@ -2,7 +2,9 @@ package se.iths.service;
 
 
 import se.iths.entity.Person;
-import se.iths.exceptions.IncorrectStudentDetailsException;
+import se.iths.entity.Student;
+import se.iths.entity.Teacher;
+import se.iths.exceptions.IncorrectPersonDetailsException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -28,19 +30,9 @@ public abstract class Service {
     @Inject
     Validator validator;
 
-
-    private <T extends Person> void validateStudent(T person) {
-        Set<ConstraintViolation<T>> violations = validator.validate(person);
-        List<String> errorMessages =
-                violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-
-        if (errorMessages.size() > 0)
-            throw new IncorrectStudentDetailsException(errorMessages);
-    }
-
     public <T> void create(T entity) {
         if(entity instanceof Person)
-            validateStudent((Person) entity);
+            validatePerson((Person) entity);
         entityManager.persist(entity);
     }
 
@@ -57,7 +49,7 @@ public abstract class Service {
 
     public <T> void update(T entity) {
         if(entity instanceof Person)
-            validateStudent((Person) entity);
+            validatePerson((Person) entity);
         entityManager.merge(entity);
     }
 
@@ -102,6 +94,19 @@ public abstract class Service {
 
         TypedQuery<T> typedQuery = entityManager.createQuery(criteriaQuery);
         return typedQuery.getResultList();
+    }
+
+
+    private <T extends Person> void validatePerson(T person) {
+        Set<ConstraintViolation<T>> violations = validator.validate(person);
+        List<String> errorMessages =
+                violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        if (errorMessages.size() > 0 && person instanceof Student)
+            throw new IncorrectPersonDetailsException(errorMessages, "students");
+
+        if (errorMessages.size() > 0 && person instanceof Teacher)
+            throw new IncorrectPersonDetailsException(errorMessages, "teachers");
     }
 
 }
