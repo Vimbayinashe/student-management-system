@@ -11,10 +11,7 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -26,9 +23,10 @@ public class StudentService extends Service {
     @Inject
     Validator validator;
 
-    public void createStudent(Student student) {
+
+    public void create(Student student) {
         validateStudent(student);
-        entityManager.persist(student);
+        super.create(student);
     }
 
     private void validateStudent(Student student) {
@@ -40,46 +38,10 @@ public class StudentService extends Service {
             throw new IncorrectStudentDetailsException(errorMessages);
     }
 
-//    public Optional<Student> getStudentById(Long id) {
-//        return Optional.ofNullable(entityManager.find(Student.class, id));
-//    }
 
-    public List<Student> getAllStudents() {
-        return entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();
-    }
-
-    public void updateStudent(Student student) {
+    public void update(Student student) {
         validateStudent(student);
-        entityManager.merge(student);
-    }
-
-    public Student updateFirstname(Long id, String firstname) {
-        Student student = entityManager.find(Student.class, id);
-        student.setFirstName(firstname);
-        return student;
-    }
-
-    public Student updateLastName(Long id, String lastName) {
-        Student student = entityManager.find(Student.class, id);
-        student.setLastName(lastName);
-        return student;
-    }
-
-    public Student updateEmail(Long id, String email) {
-        Student student = entityManager.find(Student.class, id);
-        student.setEmail(email);
-        return student;
-    }
-
-    public Student updatePhoneNumber(Long id, String phoneNumber) {
-        Student student = entityManager.find(Student.class, id);
-        student.setPhoneNumber(phoneNumber);
-        return student;
-    }
-
-    public void deleteStudent(Long id) {
-        Student student = entityManager.find(Student.class, id);
-        entityManager.remove(student);
+        super.update(student);
     }
 
     public List<Student> getStudentsByLastName(String lastName) {

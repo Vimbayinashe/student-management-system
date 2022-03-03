@@ -30,7 +30,7 @@ public class StudentRest {
     @GET
     public Response getAllStudents(@QueryParam("lastName") String lastName) {
         List<Student> studentList = lastName == null
-                ? studentService.getAllStudents()
+                ? studentService.getAll(Student.class)
                 : studentService.getStudentsByLastName(lastName);
 
         return Response.ok(studentList).build();
@@ -47,7 +47,7 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student) {
-        studentService.createStudent(student);
+        studentService.create(student);
         return Response.status(Response.Status.CREATED).entity(student)
                 .location(URI.create("/student-management-system/api/v1/students/" + student.getId()))
                 .build();
@@ -57,7 +57,7 @@ public class StudentRest {
     @PUT
     public Response updateStudent(Student student) {
         validatorService.validateId(student.getId());
-        studentService.updateStudent(student);
+        studentService.update(student);
         return Response.ok(student).build();
     }
 
@@ -69,13 +69,13 @@ public class StudentRest {
                 studentService.getById(Student.class, id).orElseThrow(() -> new StudentNotFoundException(id));
 
         if (validatorService.isUpdated(studentDetails.getFirstName()))
-            student = studentService.updateFirstname(id, studentDetails.getFirstName());
+            student = studentService.updateFirstname(Student.class, id, studentDetails.getFirstName());
         if (validatorService.isUpdated(studentDetails.getLastName()))
-            student = studentService.updateLastName(id, studentDetails.getLastName());
+            student = studentService.updateLastName(Student.class, id, studentDetails.getLastName());
         if (validatorService.isUpdated(studentDetails.getEmail()))
-            student = studentService.updateEmail(id, studentDetails.getEmail());
+            student = studentService.updateEmail(Student.class, id, studentDetails.getEmail());
         if (validatorService.isUpdated(studentDetails.getPhoneNumber()))
-            student = studentService.updatePhoneNumber(id, studentDetails.getPhoneNumber());
+            student = studentService.updatePhoneNumber(Student.class, id, studentDetails.getPhoneNumber());
 
         return Response.ok(student).build();
     }
@@ -84,7 +84,7 @@ public class StudentRest {
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
         validatorService.validateId(id);
-        studentService.deleteStudent(id);
+        studentService.delete(Student.class, id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
