@@ -1,6 +1,4 @@
-package se.iths.rest;
-
-import se.iths.service.Service;
+package se.iths.service;
 
 import javax.transaction.Transactional;
 
