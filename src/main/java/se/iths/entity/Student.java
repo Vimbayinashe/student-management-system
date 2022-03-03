@@ -32,7 +32,7 @@ public class Student extends Person{
         subjects.remove(subject);
     }
 
-    @JsonbTransient   //todo: use JPQL queries to show a student's subjects
+    @JsonbTransient
     public Set<Subject> getSubjects() {
         return Collections.unmodifiableSet(subjects);
     }
