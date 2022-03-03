@@ -2,7 +2,7 @@ package se.iths.service;
 
 
 import se.iths.entity.Person;
-import se.iths.entity.Student;
+import se.iths.exceptions.IncorrectStudentDetailsException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -12,9 +12,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional
 public abstract class Service {
@@ -22,10 +25,24 @@ public abstract class Service {
     @PersistenceContext
     EntityManager entityManager;
 
-    public <T> void create(T entity) {
-        entityManager.persist(entity);
+    @Inject
+    Validator validator;
+
+
+    private <T extends Person> void validateStudent(T person) {
+        Set<ConstraintViolation<T>> violations = validator.validate(person);
+        List<String> errorMessages =
+                violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        if (errorMessages.size() > 0)
+            throw new IncorrectStudentDetailsException(errorMessages);
     }
 
+    public <T> void create(T entity) {
+        if(entity instanceof Person)
+            validateStudent((Person) entity);
+        entityManager.persist(entity);
+    }
 
     public <T> Optional<T> getById(Class<T> subClass, Long id) {
         return Optional.ofNullable(entityManager.find(subClass, id));
@@ -39,6 +56,8 @@ public abstract class Service {
     }
 
     public <T> void update(T entity) {
+        if(entity instanceof Person)
+            validateStudent((Person) entity);
         entityManager.merge(entity);
     }
 
