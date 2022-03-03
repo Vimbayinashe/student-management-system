@@ -1,7 +1,7 @@
 package se.iths.rest;
 
 import se.iths.entity.Subject;
-import se.iths.exceptions.EntityNotFoundException;
+import se.iths.exceptions.IdNumberNotFoundException;
 import se.iths.service.SubjectService;
 import se.iths.service.validatorservice.SubjectValidatorService;
 
@@ -36,7 +36,7 @@ public class SubjectRest {
     @GET
     public Response getSubject(@PathParam("id") Long id) {
         Optional<Subject> foundSubject = subjectService.getById(Subject.class, id);
-        Subject subject = foundSubject.orElseThrow(() -> new EntityNotFoundException("subject", id));
+        Subject subject = foundSubject.orElseThrow(() -> new IdNumberNotFoundException("subject", id));
         return Response.ok(subject).build();
     }
 
