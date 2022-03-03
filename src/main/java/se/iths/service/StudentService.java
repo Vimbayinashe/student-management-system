@@ -1,6 +1,5 @@
 package se.iths.service;
 
-
 import javax.transaction.Transactional;
 
 @Transactional
