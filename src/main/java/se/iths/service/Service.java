@@ -101,10 +101,12 @@ public abstract class Service {
         Set<ConstraintViolation<T>> violations = validator.validate(person);
         List<String> errorMessages =
                 violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+        handleErrors(person, errorMessages);
+    }
 
+    private <T extends Person> void handleErrors(T person, List<String> errorMessages) {
         if (errorMessages.size() > 0 && person instanceof Student)
             throw new IncorrectPersonDetailsException(errorMessages, "students");
-
         if (errorMessages.size() > 0 && person instanceof Teacher)
             throw new IncorrectPersonDetailsException(errorMessages, "teachers");
     }
