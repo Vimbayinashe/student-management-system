@@ -20,11 +20,12 @@ public class Teacher extends Person{
     public Teacher(String firstName, String lastName, String email) {
         super(firstName, lastName, email);
     }
+
     public Teacher(String firstName, String lastName, String email, String phoneNumber) {
         super(firstName, lastName, email, phoneNumber);
     }
 
-
+    @JsonbTransient
     public List<Subject> getSubjects() {
         return Collections.unmodifiableList(subjects);
     }
@@ -35,6 +36,11 @@ public class Teacher extends Person{
 
     public void addSubject(Subject subject) {
         subjects.add(subject);
+    }
+
+    public void addSubjectAndTeacher(Subject subject) {
+        subjects.add(subject);
+        subject.setTeacher(this);
     }
 
     public void removeSubject(Subject subject) {

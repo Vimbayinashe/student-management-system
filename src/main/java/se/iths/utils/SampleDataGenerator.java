@@ -39,17 +39,10 @@ public class SampleDataGenerator {
 
         students.forEach(student -> subjects.forEach(subject -> subject.addStudent(student)));
 
-        teacher1.addSubject(subjects.get(0));
-        teacher1.addSubject(subjects.get(1));
-        teacher2.addSubject(subjects.get(2));
-
-        entityManager.persist(teacher1);
-        entityManager.persist(teacher2);
+        teacher1.addSubjectAndTeacher(subjects.get(0));
+        teacher1.addSubjectAndTeacher(subjects.get(1));
+        teacher2.addSubjectAndTeacher(subjects.get(2));
 
         subjects.forEach(subject -> entityManager.persist(subject));
-
-        // entityManager.persist(mathematics);  // can persist both subject & students (by itself).
-                                            // Students are only created IF they don't already exist
-
     }
 }

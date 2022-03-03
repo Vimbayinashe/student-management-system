@@ -56,7 +56,6 @@ public class Subject {
         student.removeSubject(this);
     }
 
-//    @JsonbTransient
     public Set<Student> getStudents() {
         return Collections.unmodifiableSet(students);
     }
