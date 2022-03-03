@@ -1,5 +1,6 @@
 package se.iths.rest;
 
+import se.iths.entity.PersonDetails;
 import se.iths.entity.Teacher;
 import se.iths.exceptions.TeacherNotFoundException;
 import se.iths.service.TeacherService;
@@ -57,6 +58,25 @@ public class TeacherRest {
         teacherService.update(teacher);
         return Response.ok(teacher).build();
     }
+
+    @Path("{id}")
+    @PATCH
+    public Response updateTeacher(@PathParam("id") Long id, PersonDetails personDetails) {
+        Teacher teacher =
+                teacherService.getById(Teacher.class, id).orElseThrow(() -> new TeacherNotFoundException(id));
+
+        if (validatorService.isUpdated(personDetails.getFirstName()))
+            teacher = teacherService.updateFirstname(Teacher.class, id, personDetails.getFirstName());
+        if (validatorService.isUpdated(personDetails.getLastName()))
+            teacher = teacherService.updateLastName(Teacher.class, id, personDetails.getLastName());
+        if (validatorService.isUpdated(personDetails.getEmail()))
+            teacher = teacherService.updateEmail(Teacher.class, id, personDetails.getEmail());
+        if (validatorService.isUpdated(personDetails.getPhoneNumber()))
+            teacher = teacherService.updatePhoneNumber(Teacher.class, id, personDetails.getPhoneNumber());
+
+        return Response.ok(teacher).build();
+    }
+
 
     @Path("{id}")
     @DELETE

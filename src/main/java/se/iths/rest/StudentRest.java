@@ -2,7 +2,7 @@ package se.iths.rest;
 
 
 import se.iths.entity.Student;
-import se.iths.entity.StudentDetails;
+import se.iths.entity.PersonDetails;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
 import se.iths.validatorservice.StudentValidatorService;
@@ -64,18 +64,18 @@ public class StudentRest {
 
     @Path("{id}")
     @PATCH
-    public Response updateStudentDetails(@PathParam("id") Long id, StudentDetails studentDetails) {
+    public Response updateStudentDetails(@PathParam("id") Long id, PersonDetails personDetails) {
         Student student =
                 studentService.getById(Student.class, id).orElseThrow(() -> new StudentNotFoundException(id));
 
-        if (validatorService.isUpdated(studentDetails.getFirstName()))
-            student = studentService.updateFirstname(Student.class, id, studentDetails.getFirstName());
-        if (validatorService.isUpdated(studentDetails.getLastName()))
-            student = studentService.updateLastName(Student.class, id, studentDetails.getLastName());
-        if (validatorService.isUpdated(studentDetails.getEmail()))
-            student = studentService.updateEmail(Student.class, id, studentDetails.getEmail());
-        if (validatorService.isUpdated(studentDetails.getPhoneNumber()))
-            student = studentService.updatePhoneNumber(Student.class, id, studentDetails.getPhoneNumber());
+        if (validatorService.isUpdated(personDetails.getFirstName()))
+            student = studentService.updateFirstname(Student.class, id, personDetails.getFirstName());
+        if (validatorService.isUpdated(personDetails.getLastName()))
+            student = studentService.updateLastName(Student.class, id, personDetails.getLastName());
+        if (validatorService.isUpdated(personDetails.getEmail()))
+            student = studentService.updateEmail(Student.class, id, personDetails.getEmail());
+        if (validatorService.isUpdated(personDetails.getPhoneNumber()))
+            student = studentService.updatePhoneNumber(Student.class, id, personDetails.getPhoneNumber());
 
         return Response.ok(student).build();
     }
