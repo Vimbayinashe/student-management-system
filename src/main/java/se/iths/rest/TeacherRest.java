@@ -35,9 +35,9 @@ public class TeacherRest {
 
     @Path("{id}")
     @GET
-    public Response getStudent(@PathParam("id") Long id) {
-        Optional<Teacher> foundStudent = teacherService.getById(Teacher.class, id);
-        Teacher teacher = foundStudent.orElseThrow(() -> new TeacherNotFoundException(id));
+    public Response getTeacher(@PathParam("id") Long id) {
+        Optional<Teacher> foundTeacher = teacherService.getById(Teacher.class, id);
+        Teacher teacher = foundTeacher.orElseThrow(() -> new TeacherNotFoundException(id));
         return Response.ok(teacher).build();
     }
 
