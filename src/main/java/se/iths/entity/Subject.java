@@ -15,7 +15,6 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Subject name is a required field")
     private String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
