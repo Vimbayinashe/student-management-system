@@ -3,7 +3,7 @@ package se.iths.rest;
 
 import se.iths.entity.Student;
 import se.iths.entity.PersonDetails;
-import se.iths.exceptions.StudentNotFoundException;
+import se.iths.exceptions.EntityNotFoundException;
 import se.iths.service.StudentService;
 import se.iths.service.validatorservice.StudentValidatorService;
 
@@ -40,7 +40,7 @@ public class StudentRest {
     @GET
     public Response getStudent(@PathParam("id") Long id) {
         Optional<Student> foundStudent = studentService.getById(Student.class, id);
-        Student student = foundStudent.orElseThrow(() -> new StudentNotFoundException(id));
+        Student student = foundStudent.orElseThrow(() -> new EntityNotFoundException("student", id));
         return Response.ok(student).build();
     }
 
@@ -66,7 +66,7 @@ public class StudentRest {
     @PATCH
     public Response updateStudentDetails(@PathParam("id") Long id, PersonDetails personDetails) {
         Student student =
-                studentService.getById(Student.class, id).orElseThrow(() -> new StudentNotFoundException(id));
+                studentService.getById(Student.class, id).orElseThrow(() -> new EntityNotFoundException("student", id));
 
         if (validatorService.isUpdated(personDetails.getFirstName()))
             student = studentService.updateFirstname(Student.class, id, personDetails.getFirstName());
