@@ -1,11 +1,9 @@
 package se.iths.rest;
 
-import se.iths.entity.Student;
 import se.iths.entity.Teacher;
-import se.iths.exceptions.StudentNotFoundException;
 import se.iths.exceptions.TeacherNotFoundException;
-import se.iths.service.StudentValidatorService;
 import se.iths.service.TeacherService;
+import se.iths.validatorservice.TeacherValidatorService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,6 +20,9 @@ public class TeacherRest {
 
     @Inject
     TeacherService teacherService;
+
+    @Inject
+    TeacherValidatorService validatorService;
 
     @Path("")
     @GET
@@ -52,7 +53,7 @@ public class TeacherRest {
     @Path("")
     @PUT
     public Response updateTeacher(Teacher teacher) {
-//        validatorService.validateId(teacher.getId());
+        validatorService.validateId(teacher.getId());
         teacherService.update(teacher);
         return Response.ok(teacher).build();
     }
@@ -60,7 +61,7 @@ public class TeacherRest {
     @Path("{id}")
     @DELETE
     public Response deleteTeacher(@PathParam("id") Long id) {
-//        validatorService.validateId(id);
+        validatorService.validateId(id);
         teacherService.delete(Teacher.class, id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }

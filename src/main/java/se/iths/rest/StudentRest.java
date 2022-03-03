@@ -5,7 +5,8 @@ import se.iths.entity.Student;
 import se.iths.entity.StudentDetails;
 import se.iths.exceptions.StudentNotFoundException;
 import se.iths.service.StudentService;
-import se.iths.service.StudentValidatorService;
+import se.iths.validatorservice.StudentValidatorService;
+import se.iths.validatorservice.ValidatorService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
