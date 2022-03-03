@@ -2,6 +2,7 @@ package se.iths.entity;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -13,6 +14,8 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Subject name is a required field")
     private String name;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
