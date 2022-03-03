@@ -3,6 +3,7 @@ package se.iths.rest;
 import se.iths.entity.Student;
 import se.iths.entity.Teacher;
 import se.iths.exceptions.StudentNotFoundException;
+import se.iths.exceptions.TeacherNotFoundException;
 import se.iths.service.StudentValidatorService;
 import se.iths.service.TeacherService;
 
@@ -35,7 +36,7 @@ public class TeacherRest {
     @GET
     public Response getStudent(@PathParam("id") Long id) {
         Optional<Teacher> foundStudent = teacherService.getById(Teacher.class, id);
-        Teacher teacher = foundStudent.orElseThrow(() -> new StudentNotFoundException(id));
+        Teacher teacher = foundStudent.orElseThrow(() -> new TeacherNotFoundException(id));
         return Response.ok(teacher).build();
     }
 
