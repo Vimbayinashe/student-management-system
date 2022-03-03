@@ -31,7 +31,7 @@ public class StudentRest {
     public Response getAllStudents(@QueryParam("lastName") String lastName) {
         List<Student> studentList = lastName == null
                 ? studentService.getAll(Student.class)
-                : studentService.getStudentsByLastName(lastName);
+                : studentService.getPersonsByLastname(Student.class, lastName);
 
         return Response.ok(studentList).build();
     }

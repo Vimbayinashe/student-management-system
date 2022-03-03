@@ -44,10 +44,4 @@ public class StudentService extends Service {
         super.update(student);
     }
 
-    public List<Student> getStudentsByLastName(String lastName) {
-        return entityManager.createQuery("SELECT s FROM Student s WHERE s.lastName = :lastName", Student.class)
-                .setParameter("lastName", lastName)
-                .getResultList();
-    }
-
 }

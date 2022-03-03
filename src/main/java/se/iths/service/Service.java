@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import javax.validation.Validator;
 import java.util.List;
@@ -31,7 +32,6 @@ public abstract class Service {
     }
 
     public <T> List<T> getAll(Class<T> subClass) {
-//        return entityManager.createQuery("SELECT s FROM Student s", subClass).getResultList();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(subClass);
         TypedQuery<T> typedQuery = entityManager.createQuery(criteriaQuery);
@@ -74,10 +74,15 @@ public abstract class Service {
     }
 
 
-//    public List<Student> getStudentsByLastName(String lastName) {
-//        return entityManager.createQuery("SELECT s FROM Student s WHERE s.lastName = :lastName", Student.class)
-//                .setParameter("lastName", lastName)
-//                .getResultList();
-//    }
+    public <T extends Person> List<T> getPersonsByLastname(Class<T> subClass, String lastName) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(subClass);
+
+        Root<T> root = criteriaQuery.from(subClass);
+        criteriaQuery.select(root).where(criteriaBuilder.like(root.get("lastName"), lastName));
+
+        TypedQuery<T> typedQuery = entityManager.createQuery(criteriaQuery);
+        return typedQuery.getResultList();
+    }
 
 }
