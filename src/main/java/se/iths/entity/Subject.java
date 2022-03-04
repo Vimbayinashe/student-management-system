@@ -1,8 +1,6 @@
 package se.iths.entity;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
