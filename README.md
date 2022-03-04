@@ -250,6 +250,7 @@ A student management system built with Java EE.
               "url": "/api/v1/students/64"
            }
            ```
+     **NB:** A teacher or student entity must **first** be detached from all subject before it can be deleted.
            
  #### Entity: subjects
 
@@ -400,7 +401,7 @@ A student management system built with Java EE.
           ```           
 
 5. **DELETE**  /api/v1/subjects/{id}
-    - Description - delete a subject with the given ID from the system
+    - Description - delete a subject with the given ID 
     - Path Parameters
         - **id** - an integer that represents the subject's ID number in the system
     - Request body - none
@@ -417,4 +418,228 @@ A student management system built with Java EE.
              "url": "/api/v1/subjects/64"
           }
           ```
-          
+
+6. **GET**  /api/v1/subjects/{id}/students
+    - Description - get all students for a subject with the specified ID
+    - Path Parameters
+        - **id** - an integer that represents the subject's ID number in the system
+    - Request body - none
+    - Responses
+        - **200 OK**   
+          _example:_
+          ```
+          [
+            {
+                "email": "henry_b@mymail.com",
+                "firstName": "Henry",
+                "id": 2,
+                "lastName": "Thorbjörn",
+                "phoneNumber": "0732345678"
+            },
+            {
+                "email": "e.stewart@mymail.com",
+                "firstName": "Elizabeth",
+                "id": 8,
+                "lastName": "Stewart"
+            }
+          ]
+          ```
+
+        - **404 Not Found**   
+          _example:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+
+7. **GET**  /api/v1/subjects/{subjectId}/students/{studentId}
+    - Description - get a student with ID (studentId) if the student is enrolled in a subject with ID (subjectId).
+    - Path Parameters
+        - **subjectId** - an integer that represents the subject's ID number in the system
+        - **studentId** - an integer that represents the student's ID number in the system
+    - Request body - none
+    - Responses
+        - **200 OK**   
+          _example:_
+          ```
+            {
+                "email": "henry_b@mymail.com",
+                "firstName": "Henry",
+                "id": 2,
+                "lastName": "Thorbjörn",
+                "phoneNumber": "0732345678"
+            }
+          ```
+
+        - **404 Not Found**   
+          _examples:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+          ,
+          ```
+          {
+             "errorCode": 404,
+             "message": "student with ID 2 not found in this subject",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/3/students/2"
+          }
+          ```
+
+8. **PUT**  /api/v1/subjects/{subjectId}/students/{studentId}
+    - Description - add a student with ID (studentId) to a subject with ID (subjectId).
+    - Path Parameters
+        - **subjectId** - an integer that represents the subject's ID number in the system
+        - **studentId** - an integer that represents the student's ID number in the system
+    - Request body - none
+    - Responses
+        - **204 No Content**   
+         
+        - **404 Not Found**   
+          _examples:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+          ,
+          ```
+          {
+             "errorCode": 404,
+             "message": "Student with ID 2 not foundt",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/students/2"
+          }
+          ```
+
+9. **DELETE**  /api/v1/subjects/{subjectId}/students/{studentId}
+    - Description - remove a student with ID (studentId) from a subject with ID (subjectId).
+    - Path Parameters
+        - **subjectId** - an integer that represents the subject's ID number in the system
+        - **studentId** - an integer that represents the student's ID number in the system
+    - Request body - none
+    - Responses
+        - **204 No Content**
+
+        - **404 Not Found**   
+          _examples:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+          ,
+          ```
+          {
+             "errorCode": 404,
+             "message": "student with ID 2 not found in this subject",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/3/students/2"
+          }
+          ```
+
+10. **GET**  /api/v1/subjects/{id}/teachers
+    - Description - get the teacher for a subject with the specified ID
+    - Path Parameters
+        - **id** - an integer that represents the subject's ID number in the system
+    - Request body - none
+    - Responses
+        - **200 OK**   
+          _example:_
+          ```
+            {
+                "email": "miley_jonsson@mymail.com",
+                "firstName": "Miley",
+                "id": 28,
+                "lastName": "Jonsson",
+                "phoneNumber": "0732345678"
+            }
+          ```
+          ,     
+          ``
+          { }
+          ``
+
+        - **404 Not Found**   
+          _example:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+
+11. **PUT**  /api/v1/subjects/{subjectId}/teachers/{teacherId}
+    - Description - add a teacher with ID (teacherId) to a subject with ID (subjectId).
+    - Path Parameters
+        - **subjectId** - an integer that represents the subject's ID number in the system
+        - **teacherId** - an integer that represents the teacher's ID number in the system
+    - Request body - none
+    - Responses
+        - **204 No Content**
+
+        - **404 Not Found**   
+          _examples:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+          ,
+          ```
+          {
+             "errorCode": 404,
+             "message": "Teacher with ID 24 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/teachers/24"
+          }
+          ```
+
+9. **DELETE**  /api/v1/subjects/{subjectId}/teachers/{teacherId}
+    - Description - remove a teacher with ID (teacherId) from a subject with ID (subjectId).
+    - Path Parameters
+        - **subjectId** - an integer that represents the subject's ID number in the system
+        - **teacherId** - an integer that represents the teacher's ID number in the system
+    - Request body - none
+    - Responses
+        - **204 No Content**
+
+        - **404 Not Found**   
+          _examples:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```
+          ,
+          ```
+          {
+             "errorCode": 404,
+             "message": "Teacher with ID 12 not found in this subject",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/3/teachers/12"
+          }
+          ```
