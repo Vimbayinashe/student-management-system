@@ -3,10 +3,12 @@ package se.iths.utils;
 import se.iths.entity.Student;
 import se.iths.entity.Subject;
 import se.iths.entity.Teacher;
+import se.iths.service.TeacherService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -61,10 +63,10 @@ public class SampleDataGenerator {
 
         subjects2.forEach(subject -> entityManager.persist(subject));
 
-        List<Student> teachers = List.of(
-                new Student("Michael", "Taylor", "taylor_man@myemail.com"),
-                new Student("Per", "Simpson", "pers@mymail.com"),
-                new Student("Miley", "Sunboom", "miss_moon@mymail.com")
+        List<Teacher> teachers = List.of(
+                new Teacher("Michael", "Taylor", "taylor_man@myemail.com"),
+                new Teacher("Per", "Simpson", "pers@mymail.com"),
+                new Teacher("Miley", "Sunboom", "miss_moon@mymail.com")
         );
 
         teachers.forEach(teacher -> entityManager.persist(teacher));

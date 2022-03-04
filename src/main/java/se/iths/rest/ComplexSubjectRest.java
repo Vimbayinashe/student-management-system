@@ -1,18 +1,13 @@
 package se.iths.rest;
 
 import se.iths.entity.Student;
-import se.iths.entity.Subject;
-import se.iths.exceptions.IdNumberNotFoundException;
-import se.iths.exceptions.NestedIdNumberNotFoundException;
+import se.iths.entity.Teacher;
 import se.iths.service.ComplexSubjectService;
-import se.iths.service.StudentService;
-import se.iths.service.SubjectService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 import java.util.Set;
 
 @Path("subjects")
@@ -48,6 +43,28 @@ public class ComplexSubjectRest {
     @DELETE
     public Response removeStudentFromSubject(@PathParam("id") Long subjectId, @PathParam("studentId") Long studentId) {
         service.removeStudent(subjectId, studentId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @Path("{id}/teachers")
+    @GET
+    public Response getTeacher(@PathParam("id") Long id) {
+        Teacher teacher = service.getTeacherFromSubject(id);
+        return Response.ok(teacher).build();
+    }
+
+
+    @Path("{id}/teachers/{teacherId}")
+    @PUT
+    public Response addTeacherToSubject(@PathParam("id") Long subjectId, @PathParam("teacherId") Long teacherId) {
+        service.addTeacher(subjectId, teacherId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @Path("{id}/teachers/{teacherId}")
+    @DELETE
+    public Response removeTeacherFromSubject(@PathParam("id") Long subjectId, @PathParam("teacherId") Long teacherId) {
+        service.removeTeacher(subjectId, teacherId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
