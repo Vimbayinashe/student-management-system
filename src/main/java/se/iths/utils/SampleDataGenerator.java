@@ -44,5 +44,29 @@ public class SampleDataGenerator {
         teacher2.addSubjectAndTeacher(subjects.get(2));
 
         subjects.forEach(subject -> entityManager.persist(subject));
+
+        List<Student> students2 = List.of(
+                new Student("Ernest", "Machingaidze", "ernie@myemail.com"),
+                new Student("Lionel", "Cunningham", "lionel.c@mymail.com"),
+                new Student("Trevor", "Williams", "twilliams@mymail.com")
+        );
+
+        students2.forEach(student -> entityManager.persist(student));
+
+        List<Subject> subjects2 = List.of(
+                new Subject("geography"),
+                new Subject("history"),
+                new Subject("art")
+        );
+
+        subjects2.forEach(subject -> entityManager.persist(subject));
+
+        List<Student> teachers = List.of(
+                new Student("Michael", "Taylor", "taylor_man@myemail.com"),
+                new Student("Per", "Simpson", "pers@mymail.com"),
+                new Student("Miley", "Sunboom", "miss_moon@mymail.com")
+        );
+
+        teachers.forEach(teacher -> entityManager.persist(teacher));
     }
 }
