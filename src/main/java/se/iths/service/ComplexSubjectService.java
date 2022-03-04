@@ -42,4 +42,18 @@ public class ComplexSubjectService {
         return foundStudent.orElseThrow(() -> new NestedIdNumberNotFoundException(subjectId, "student", studentId));
     }
 
+    public void removeStudent(Long subjectId, Long studentId) {
+        Subject subject = getSubject(subjectId);
+        Student student = getStudentFromSubject(subjectId, studentId);
+        subject.removeStudent(student);
+        subjectService.update(subject);
+    }
+
+    public void addStudent(Long subjectId, Long studentId) {
+        Subject subject = getSubject(subjectId);
+        Student student = getStudent(studentId);
+        subject.addStudent(student);
+        subjectService.update(subject);
+    }
+
 }

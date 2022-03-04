@@ -30,7 +30,6 @@ public class ComplexSubjectRest {
         return Response.ok(students).build();
     }
 
-
     @Path("{subjectId}/students/{studentId}")
     @GET
     public Response getStudentById(@PathParam("subjectId") Long subjectId, @PathParam("studentId") Long studentId) {
@@ -38,25 +37,17 @@ public class ComplexSubjectRest {
         return Response.ok(student).build();
     }
 
-
     @Path("{id}/students/{studentId}")
     @PUT
     public Response addStudentToSubject(@PathParam("id") Long subjectId, @PathParam("studentId") Long studentId) {
-        Subject subject = service.getSubject(subjectId);
-        Student student = service.getStudent(studentId);
-        subject.addStudent(student);
-
+        service.addStudent(subjectId, studentId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
-
 
     @Path("{id}/students/{studentId}")
     @DELETE
     public Response removeStudentFromSubject(@PathParam("id") Long subjectId, @PathParam("studentId") Long studentId) {
-        Subject subject = service.getSubject(subjectId);
-        Student student = service.getStudentFromSubject(subjectId, studentId);
-        subject.removeStudent(student);
-
+        service.removeStudent(subjectId, studentId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
