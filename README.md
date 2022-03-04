@@ -398,7 +398,17 @@ A student management system built with Java EE.
              "timestamp": "2022-02-26T21:34:47.780382166",
              "url": "/api/v1/subjects/"
           }
-          ```           
+          ```     
+        - **404 Not Found**   
+          _example:_
+          ```
+          {
+             "errorCode": 404,
+             "message": "Subject with ID 64 not found",
+             "timestamp": "2022-02-26T21:34:47.780382166",
+             "url": "/api/v1/subjects/64"
+          }
+          ```      
 
 5. **DELETE**  /api/v1/subjects/{id}
     - Description - delete a subject with the given ID 
@@ -444,8 +454,13 @@ A student management system built with Java EE.
             }
           ]
           ```
+          ,
 
-        - **404 Not Found**   
+          ``
+          []
+          ``
+
+          - **404 Not Found**   
           _example:_
           ```
           {
@@ -553,10 +568,10 @@ A student management system built with Java EE.
           }
           ```
 
-10. **GET**  /api/v1/subjects/{id}/teachers
-    - Description - get the teacher for a subject with the specified ID
+10. **GET**  /api/v1/subjects/{subjectId}/teachers
+    - Description - get the teacher for a subject with the specified ID (subjectId)
     - Path Parameters
-        - **id** - an integer that represents the subject's ID number in the system
+        - **subjectId** - an integer that represents the subject's ID number in the system
     - Request body - none
     - Responses
         - **200 OK**   
