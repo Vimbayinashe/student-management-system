@@ -32,16 +32,16 @@ public class ComplexSubjectRest {
         return Response.ok(student).build();
     }
 
-    @Path("{id}/students/{studentId}")
+    @Path("{subjectId}/students/{studentId}")
     @PUT
-    public Response addStudentToSubject(@PathParam("id") Long subjectId, @PathParam("studentId") Long studentId) {
+    public Response addStudentToSubject(@PathParam("subjectId") Long subjectId, @PathParam("studentId") Long studentId) {
         service.addStudent(subjectId, studentId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
-    @Path("{id}/students/{studentId}")
+    @Path("{subjectId}/students/{studentId}")
     @DELETE
-    public Response removeStudentFromSubject(@PathParam("id") Long subjectId, @PathParam("studentId") Long studentId) {
+    public Response removeStudentFromSubject(@PathParam("subjectId") Long subjectId, @PathParam("studentId") Long studentId) {
         service.removeStudent(subjectId, studentId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
@@ -54,16 +54,16 @@ public class ComplexSubjectRest {
     }
 
 
-    @Path("{id}/teachers/{teacherId}")
+    @Path("{subjectId}/teachers/{teacherId}")
     @PUT
-    public Response addTeacherToSubject(@PathParam("id") Long subjectId, @PathParam("teacherId") Long teacherId) {
+    public Response addTeacherToSubject(@PathParam("subjectId") Long subjectId, @PathParam("teacherId") Long teacherId) {
         service.addTeacher(subjectId, teacherId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
-    @Path("{id}/teachers/{teacherId}")
+    @Path("{subjectId}/teachers/{teacherId}")
     @DELETE
-    public Response removeTeacherFromSubject(@PathParam("id") Long subjectId, @PathParam("teacherId") Long teacherId) {
+    public Response removeTeacherFromSubject(@PathParam("subjectId") Long subjectId, @PathParam("teacherId") Long teacherId) {
         service.removeTeacher(subjectId, teacherId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
