@@ -38,11 +38,6 @@ public class Teacher extends Person{
         subjects.add(subject);
     }
 
-    public void addSubjectAndTeacher(Subject subject) {
-        subjects.add(subject);
-        subject.setTeacher(this);
-    }
-
     public void removeSubject(Subject subject) {
         subjects.remove(subject);
     }
